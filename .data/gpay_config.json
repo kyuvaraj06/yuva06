@@ -1,0 +1,7 @@
+[
+  {
+    "id": "global",
+    "gpayId": "kumarkyuvaraj1@oksbi",
+    "qrImageUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=kumarkyuvaraj1@oksbi&pn=Yuvaraj&cu=INR"
+  }
+]

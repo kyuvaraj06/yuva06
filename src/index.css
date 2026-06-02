@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Natural Tones - Override emerald palette to match organic greens */
+  --color-emerald-50: #F0F7EA;
+  --color-emerald-100: #D1E2C4;
+  --color-emerald-200: #B7CCAA;
+  --color-emerald-300: #8CA97B;
+  --color-emerald-400: #5A7A5A;
+  --color-emerald-500: #3E5B3E;
+  --color-emerald-600: #2D5A27;
+  --color-emerald-700: #22441D;
+  --color-emerald-800: #1A2E1A;
+  --color-emerald-900: #101F10;
+  --color-emerald-950: #081108;
+
+  /* Natural Tones - Override zinc palette to match crisp white backgrounds and clean neutral borders */
+  --color-zinc-50: #FFFFFF;  /* Pure clean white */
+  --color-zinc-100: #F4F4F5; /* Beautiful soft light grays */
+  --color-zinc-200: #E4E4E7; /* High contrast soft borders */
+  --color-zinc-350: #D4D4D8;
+  --color-zinc-300: #D4D4D8;
+  --color-zinc-400: #A1A1AA; /* Elegant secondary metadata grays */
+  --color-zinc-500: #71717A;
+  --color-zinc-600: #52525B; /* Readable descriptions */
+  --color-zinc-700: #3F3F46;
+  --color-zinc-800: #27272A; /* Rich deep neutral headings & text */
+  --color-zinc-900: #18181B; /* High density panels */
+  --color-zinc-950: #09090B;
+  
+  /* Custom Natural Tones variables in green with white */
+  --color-natural-bg: #FFFFFF;
+  --color-natural-primary: #2D5A27;
+  --color-natural-secondary: #5A7A5A;
+  --color-natural-dark: #18181B;
+  --color-natural-border: #E4E4E7;
+  --color-natural-sage: #F4F4F5;
+  --color-natural-soft: #F0F7EA;
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Base custom modifications matching mockups */
+body {
+  background-color: #FFFFFF;
+  color: #18181B;
+  font-family: var(--font-sans);
+}
+
+.dark body {
+  background-color: #09090B;
+  color: #F4F4F5;
+}
+
+/* Scrollbar tweaks */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D1E2C4;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #2D5A27;
+}

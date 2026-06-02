@@ -1,0 +1,6 @@
+{
+  "name": "Tamil Agro Mart",
+  "description": "A comprehensive Tamil and English agricultural marketplace for users, sellers, and admins. Supports products, order tracking, admin commission, and QR payment verification.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
