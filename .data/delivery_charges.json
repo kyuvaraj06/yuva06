@@ -1,0 +1,268 @@
+[
+  {
+    "districtEN": "Ariyalur",
+    "districtTA": "அரியலூர்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "704wqjv251780380487652"
+  },
+  {
+    "districtEN": "Chengalpattu",
+    "districtTA": "செங்கல்பட்டு",
+    "charge": 35,
+    "estimatedDays": 1,
+    "id": "hz8qims7t1780380487652"
+  },
+  {
+    "districtEN": "Chennai",
+    "districtTA": "சென்னை",
+    "charge": 30,
+    "estimatedDays": 1,
+    "id": "k9wh3bhzv1780380487652"
+  },
+  {
+    "districtEN": "Coimbatore",
+    "districtTA": "கோயம்புத்தூர்",
+    "charge": 50,
+    "estimatedDays": 2,
+    "id": "uaocpt5dx1780380487652"
+  },
+  {
+    "districtEN": "Cuddalore",
+    "districtTA": "கடலூர்",
+    "charge": 40,
+    "estimatedDays": 2,
+    "id": "igqptq1s51780380487652"
+  },
+  {
+    "districtEN": "Dharmapuri",
+    "districtTA": "தருமபுரி",
+    "charge": 50,
+    "estimatedDays": 3,
+    "id": "bfjv6ixbg1780380487653"
+  },
+  {
+    "districtEN": "Dindigul",
+    "districtTA": "திண்டுக்கல்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "3e7rejgxi1780380487653"
+  },
+  {
+    "districtEN": "Erode",
+    "districtTA": "ஈரோடு",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "mi313sm9p1780380487653"
+  },
+  {
+    "districtEN": "Kallakurichi",
+    "districtTA": "கள்ளக்குறிச்சி",
+    "charge": 40,
+    "estimatedDays": 2,
+    "id": "pgca92y321780380487653"
+  },
+  {
+    "districtEN": "Kanchipuram",
+    "districtTA": "காஞ்சிபுரம்",
+    "charge": 35,
+    "estimatedDays": 1,
+    "id": "9enxwkuhs1780380487653"
+  },
+  {
+    "districtEN": "Kanyakumari",
+    "districtTA": "கன்னியாகுமரி",
+    "charge": 65,
+    "estimatedDays": 3,
+    "id": "6iu7fve521780380487653"
+  },
+  {
+    "districtEN": "Karur",
+    "districtTA": "கரூர்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "szt339nqa1780380487654"
+  },
+  {
+    "districtEN": "Krishnagiri",
+    "districtTA": "கிருஷ்ணகிரி",
+    "charge": 50,
+    "estimatedDays": 3,
+    "id": "9qm2monez1780380487654"
+  },
+  {
+    "districtEN": "Madurai",
+    "districtTA": "மதுரை",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "zuci894q01780380487654"
+  },
+  {
+    "districtEN": "Mayiladuthurai",
+    "districtTA": "மயிலாடுதுறை",
+    "charge": 40,
+    "estimatedDays": 2,
+    "id": "jkjnoxzuw1780380487654"
+  },
+  {
+    "districtEN": "Nagapattinam",
+    "districtTA": "நாகப்பட்டினம்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "spyhwt7s91780380487654"
+  },
+  {
+    "districtEN": "Namakkal",
+    "districtTA": "நாமக்கல்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "c5s9qiwq51780380487654"
+  },
+  {
+    "districtEN": "Nilgiris",
+    "districtTA": "நீலகிரி",
+    "charge": 60,
+    "estimatedDays": 3,
+    "id": "k1j2p36oc1780380487655"
+  },
+  {
+    "districtEN": "Perambalur",
+    "districtTA": "பெரம்பலூர்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "g09rvufxp1780380487655"
+  },
+  {
+    "districtEN": "Pudukkottai",
+    "districtTA": "புதுக்கோட்டை",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "kkqtuq6u81780380487655"
+  },
+  {
+    "districtEN": "Ramanathapuram",
+    "districtTA": "இராமநாதபுரம்",
+    "charge": 55,
+    "estimatedDays": 3,
+    "id": "hp0b99jvz1780380487655"
+  },
+  {
+    "districtEN": "Ranipet",
+    "districtTA": "இராணிப்பேட்டை",
+    "charge": 35,
+    "estimatedDays": 1,
+    "id": "4ukic1eue1780380487656"
+  },
+  {
+    "districtEN": "Salem",
+    "districtTA": "சேலம்",
+    "charge": 40,
+    "estimatedDays": 2,
+    "id": "dxlz2d0fs1780380487656"
+  },
+  {
+    "districtEN": "Sivagangai",
+    "districtTA": "சிவகங்கை",
+    "charge": 50,
+    "estimatedDays": 2,
+    "id": "7frgvzp5c1780380487656"
+  },
+  {
+    "districtEN": "Tenkasi",
+    "districtTA": "தென்காசி",
+    "charge": 55,
+    "estimatedDays": 3,
+    "id": "5b9kgucxr1780380487656"
+  },
+  {
+    "districtEN": "Thanjavur",
+    "districtTA": "தஞ்சாவூர்",
+    "charge": 40,
+    "estimatedDays": 2,
+    "id": "85orxc7ys1780380487656"
+  },
+  {
+    "districtEN": "Theni",
+    "districtTA": "தேனி",
+    "charge": 50,
+    "estimatedDays": 2,
+    "id": "x6w1smy3s1780380487657"
+  },
+  {
+    "districtEN": "Thoothukudi",
+    "districtTA": "தூத்துக்குடி",
+    "charge": 60,
+    "estimatedDays": 3,
+    "id": "sqqnqadfm1780380487657"
+  },
+  {
+    "districtEN": "Tiruchirappalli",
+    "districtTA": "திருச்சிராப்பள்ளி",
+    "charge": 40,
+    "estimatedDays": 2,
+    "id": "gwz5mkv5n1780380487657"
+  },
+  {
+    "districtEN": "Tirunelveli",
+    "districtTA": "திருநெல்வேலி",
+    "charge": 55,
+    "estimatedDays": 3,
+    "id": "0de6ir2g31780380487657"
+  },
+  {
+    "districtEN": "Tirupattur",
+    "districtTA": "திருப்பத்தூர்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "z3avi9bcs1780380487657"
+  },
+  {
+    "districtEN": "Tiruppur",
+    "districtTA": "திருப்பூர்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "vidsdpyat1780380487658"
+  },
+  {
+    "districtEN": "Tiruvallur",
+    "districtTA": "திருவள்ளூர்",
+    "charge": 35,
+    "estimatedDays": 1,
+    "id": "qzor9uhry1780380487658"
+  },
+  {
+    "districtEN": "Tiruvannamalai",
+    "districtTA": "திருவண்ணாமலை",
+    "charge": 40,
+    "estimatedDays": 2,
+    "id": "h3i2br5eb1780380487658"
+  },
+  {
+    "districtEN": "Tiruvarur",
+    "districtTA": "திருவாரூர்",
+    "charge": 45,
+    "estimatedDays": 2,
+    "id": "92zrvqdd81780380487658"
+  },
+  {
+    "districtEN": "Vellore",
+    "districtTA": "வேலூர்",
+    "charge": 35,
+    "estimatedDays": 1,
+    "id": "43n48obru1780380487659"
+  },
+  {
+    "districtEN": "Viluppuram",
+    "districtTA": "விழுப்புரம்",
+    "charge": 35,
+    "estimatedDays": 1,
+    "id": "8zv3oekn41780380487659"
+  },
+  {
+    "districtEN": "Virudhunagar",
+    "districtTA": "விருதுநகர்",
+    "charge": 50,
+    "estimatedDays": 2,
+    "id": "6w1nsg7ly1780380487659"
+  }
+]

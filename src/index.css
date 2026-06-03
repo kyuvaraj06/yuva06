@@ -6,18 +6,34 @@
   --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Natural Tones - Override emerald palette to match organic greens */
-  --color-emerald-50: #F0F7EA;
-  --color-emerald-100: #D1E2C4;
-  --color-emerald-200: #B7CCAA;
-  --color-emerald-300: #8CA97B;
-  --color-emerald-400: #5A7A5A;
-  --color-emerald-500: #3E5B3E;
-  --color-emerald-600: #2D5A27;
-  --color-emerald-700: #22441D;
-  --color-emerald-800: #1A2E1A;
-  --color-emerald-900: #101F10;
-  --color-emerald-950: #081108;
+  /* Natural Tones - Elegant Bright Green & Pure White Theme */
+  --color-emerald-50: #F0FDF4;  /* Crisp Bright Mint White */
+  --color-emerald-100: #DCFCE7; /* Bright Sprout Mint */
+  --color-emerald-200: #BBF7D0; /* Fresh Mint Leaf */
+  --color-emerald-300: #86EFAC; /* Mid Meadow Green */
+  --color-emerald-400: #34D399; /* Vibrant Accent Velvet */
+  --color-emerald-500: #10B981; /* Primary Emerald Green */
+  --color-emerald-600: #059669; /* Rich Traditional Jade Green */
+  --color-emerald-700: #047857; /* Deep Organic Shade */
+  --color-emerald-800: #065F46; /* Soil Canopy Shadow */
+  --color-emerald-900: #064E3B; /* Deep Grassland Moss */
+  --color-emerald-950: #022C22; /* Nighttime Jungle Charcoal */
+
+  /* Natural Tones - Balanced Sunlit Lime / Fresh Leaf Accents */
+  --color-lime-50: #F7FEE7;
+  --color-lime-100: #ECFCCB;
+  --color-lime-200: #D9F99D;
+  --color-lime-350: #BEF264;
+  --color-lime-350: #BEF264;
+  --color-lime-300: #BEF264;
+  --color-lime-400: #A3E635; /* Crisp Radiant Lime */
+  --color-lime-500: #84CC16;
+  --color-lime-600: #65A30D;
+  --color-lime-700: #4D7C0F;
+  --color-lime-800: #3F6212;
+  --color-lime-900: #365314;
+  --color-lime-955: #1A2E05;
+  --color-lime-950: #101F02;
 
   /* Natural Tones - Override zinc palette to match crisp white backgrounds and clean neutral borders */
   --color-zinc-50: #FFFFFF;  /* Pure clean white */
@@ -33,14 +49,14 @@
   --color-zinc-900: #18181B; /* High density panels */
   --color-zinc-950: #09090B;
   
-  /* Custom Natural Tones variables in green with white */
+  /* Custom Natural Tones variables in vibrant green with white */
   --color-natural-bg: #FFFFFF;
-  --color-natural-primary: #2D5A27;
-  --color-natural-secondary: #5A7A5A;
-  --color-natural-dark: #18181B;
-  --color-natural-border: #E4E4E7;
-  --color-natural-sage: #F4F4F5;
-  --color-natural-soft: #F0F7EA;
+  --color-natural-primary: #059669;
+  --color-natural-secondary: #10B981;
+  --color-natural-dark: #1F2937;
+  --color-natural-border: #E5E7EB;
+  --color-natural-sage: #F3F4F6;
+  --color-natural-soft: #F0FDF4;
 }
 
 @layer utilities {
@@ -87,3 +103,6 @@ body {
 .dark ::-webkit-scrollbar-thumb {
   background: #2D5A27;
 }
+
+
+

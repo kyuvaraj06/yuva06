@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useApp } from "../context/AppContext.tsx";
-import { Search, MapPin, Sparkles, Heart, ArrowRight, CornerRightDown, BadgeAlert, ShoppingBag } from "lucide-react";
+import { Search, MapPin, Sparkles, Heart, ArrowRight, CornerRightDown, BadgeAlert, ShoppingBag, Map } from "lucide-react";
 
 interface HomeViewProps {
   onNavigate: (view: string, detailsId?: string) => void;
@@ -8,7 +8,11 @@ interface HomeViewProps {
   onSearchChange: (query: string) => void;
 }
 
-export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, products, onSearchChange }) => {
+export const HomeView: React.FC<HomeViewProps> = ({
+  onNavigate,
+  products,
+  onSearchChange,
+}) => {
   const { t, language, addToCart } = useApp();
   const [searchVal, setSearchVal] = useState("");
 
@@ -60,21 +64,23 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, products, onSear
           </p>
 
           {/* Search Trigger form element */}
-          <form onSubmit={handleSubmitSearch} className="flex flex-col sm:flex-row gap-3 pt-4 max-w-2xl">
+          <form onSubmit={handleSubmitSearch} className="flex flex-col sm:flex-row gap-3 pt-4 max-w-2xl w-full">
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-600 w-5 h-5 pointer-events-none" />
               <input
+                id="home-hero-search-input"
                 type="text"
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
                 placeholder={t("searchPlaceholder")}
-                className="w-full bg-white text-zinc-900 placeholder-zinc-500 outline-none rounded-2xl pl-12 pr-4 py-4 text-sm font-semibold border-2 border-emerald-800 focus:border-lime-500 transition-all focus:ring-4 focus:ring-lime-500/10 shadow-lg"
+                className="w-full bg-white text-zinc-900 placeholder-zinc-500 outline-none rounded-2xl pl-12 pr-4 py-4 text-sm font-semibold border-2 border-emerald-800 focus:border-emerald-600 transition-all focus:ring-4 focus:ring-emerald-500/10 shadow-lg"
               />
             </div>
+
             <button
               id="search-aggregate-button"
               type="submit"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 sm:py-2 rounded-2xl text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 sm:py-2 rounded-2xl text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap active:scale-95"
             >
               {t("searchBtn")}
               <ArrowRight className="w-4 h-4" />
@@ -156,12 +162,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, products, onSear
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     
-                    {/* Source District */}
-                    <span className="absolute top-4 left-4 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-1 shadow-sm">
-                      <MapPin className="w-3 h-3 text-emerald-600" />
-                      {banana.district}
-                    </span>
-
                     {/* Highly Valued Tag */}
                     <span className="absolute top-4 right-4 bg-yellow-500 text-zinc-950 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
                       👑 GI Crop
@@ -289,9 +289,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, products, onSear
                 <div>
                   <div className="relative h-44 rounded-xl overflow-hidden bg-zinc-50">
                     <img src={product.images[0]} alt={product.nameEN} className="w-full h-full object-cover" />
-                    <span className="absolute bottom-2 left-2 bg-black/50 text-white text-[10px] px-2.5 py-0.5 rounded-full font-semibold backdrop-blur-sm">
-                      📍 {product.district}
-                    </span>
                   </div>
                   <h4 
                     onClick={() => onNavigate("product-details", product.id)}

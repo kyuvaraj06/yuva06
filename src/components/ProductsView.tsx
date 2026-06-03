@@ -13,7 +13,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   products,
   onNavigate,
   searchQuery,
-  onSearchChange
+  onSearchChange,
 }) => {
   const { t, language, addToCart } = useApp();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -183,10 +183,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         alt={item.nameEN}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <span className="absolute bottom-2 left-2 bg-white/90 dark:bg-zinc-950/90 py-1 px-2.5 rounded-full text-[10px] font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-1 shadow-sm">
-                        <MapPin className="w-2.5 h-2.5 text-emerald-600" />
-                        {item.district}
-                      </span>
                     </div>
 
                     <div className="p-4 flex-1 flex flex-col justify-between space-y-3.5">

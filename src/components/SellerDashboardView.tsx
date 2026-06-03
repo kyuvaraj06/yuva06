@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "../context/AppContext.tsx";
 import { User, Layers, ShoppingBag, Plus, Trash2, Edit, Save, ArrowLeft, Truck, HelpCircle } from "lucide-react";
+
+const CATEGORY_IMAGES: Record<string, string> = {
+  banana: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=600",
+  cashew: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?q=80&w=600",
+  jackfruit: "https://images.unsplash.com/photo-1590004953392-5aba2e72269a?q=80&w=600",
+  groundnuts: "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?q=80&w=600",
+  vegetables: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=600",
+  local_products: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=600",
+};
 
 interface SellerDashboardViewProps {
   products: any[];
@@ -41,6 +50,13 @@ export const SellerDashboardView: React.FC<SellerDashboardViewProps> = ({
   const [healthBenefitsEN, setHealthBenefitsEN] = useState("");
   const [healthBenefitsTA, setHealthBenefitsTA] = useState("");
   const [deliveryAvailability, setDeliveryAvailability] = useState(true);
+
+  useEffect(() => {
+    const isStandardPreset = images.length === 0 || images.some(img => Object.values(CATEGORY_IMAGES).includes(img));
+    if (isStandardPreset && CATEGORY_IMAGES[category]) {
+      setImages([CATEGORY_IMAGES[category]]);
+    }
+  }, [category]);
 
   if (!user) return <div className="text-center py-20">Please login to view dashboard.</div>;
 

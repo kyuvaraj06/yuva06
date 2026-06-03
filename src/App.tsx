@@ -31,6 +31,10 @@ function MainAppContent() {
   const [orders, setOrders] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]); // for Admin management
 
+  // Global search & district selectors for Home & Catalog Views synchronization
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("all");
+
   // Fetch Crops products database
   const fetchProducts = async () => {
     try {
@@ -384,7 +388,7 @@ function MainAppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300 pb-16 relative">
+    <div className="min-h-screen bg-white dark:bg-white transition-colors duration-300 pb-16 relative">
       
       {/* Dynamic Navbar header */}
       <Navbar onNavigate={onNavigate} />
@@ -392,11 +396,20 @@ function MainAppContent() {
       {/* Main Orchestrator Routes layout Switcher */}
       <main className="animate-fade-in">
         {view === "home" && (
-          <HomeView onNavigate={onNavigate} products={products} />
+          <HomeView 
+            onNavigate={onNavigate} 
+            products={products} 
+            onSearchChange={setSearchQuery}
+          />
         )}
 
         {view === "catalog" && (
-          <ProductsView onNavigate={onNavigate} products={products} />
+          <ProductsView 
+            onNavigate={onNavigate} 
+            products={products} 
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
         )}
 
         {view === "details" && selectedDetailsId && (
@@ -456,6 +469,9 @@ function MainAppContent() {
             onUpdateDeliveryCharge={handleUpdateDeliveryChargeSettings}
             onUpdateGPayConfig={handleUpdateGPayMerchantConfig}
             deliveryCharges={deliveryDistricts}
+            onAddProduct={handleAddProduct}
+            onEditProduct={handleEditProduct}
+            onDeleteProduct={handleDeleteProduct}
           />
         )}
       </main>

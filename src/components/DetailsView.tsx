@@ -105,10 +105,6 @@ export const DetailsView: React.FC<DetailsViewProps> = ({
               alt={product.nameEN}
               className="w-full h-full object-cover"
             />
-            <span className="absolute top-4 left-4 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-sm shadow-md px-3.5 py-1.5 rounded-full text-xs font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5" />
-              {product.district} {language === "en" ? "Harvest" : "விளைச்சல்"}
-            </span>
 
             {product.category === "banana" && (
               <span className="absolute top-4 right-4 bg-yellow-500 text-zinc-950 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-md">

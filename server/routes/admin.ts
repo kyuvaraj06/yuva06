@@ -201,7 +201,7 @@ router.put("/delivery-charges", authenticateToken, requireRole(["admin"]), (req:
 });
 
 // 7. GET list of all delivery charges configurations
-router.get("/delivery-charges", authenticateToken, (req: CustomRequest, res: Response) => {
+router.get("/delivery-charges", (req: CustomRequest, res: Response) => {
   return res.json(DeliveryCharges.find());
 });
 

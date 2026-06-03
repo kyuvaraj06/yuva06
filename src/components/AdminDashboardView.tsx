@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useApp } from "../context/AppContext.tsx";
-import { User, ShieldAlert, Award, Grid, DollarSign, Settings, Check, X, Shield, RefreshCw, BarChart } from "lucide-react";
+import { User, ShieldAlert, Award, Grid, DollarSign, Settings, Check, X, Shield, RefreshCw, BarChart, Plus, Edit, Trash2, ArrowLeft, Layers, ShoppingBag } from "lucide-react";
 
 interface AdminDashboardViewProps {
   users: any[];
@@ -12,7 +12,19 @@ interface AdminDashboardViewProps {
   onUpdateDeliveryCharge: (chargeData: any) => Promise<boolean>;
   onUpdateGPayConfig: (gpayData: any) => Promise<boolean>;
   deliveryCharges: any[];
+  onAddProduct?: (formData: any) => Promise<boolean>;
+  onEditProduct?: (id: string, formData: any) => Promise<boolean>;
+  onDeleteProduct?: (id: string) => Promise<boolean>;
 }
+
+const CATEGORY_IMAGES: Record<string, string> = {
+  banana: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=600",
+  cashew: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?q=80&w=600",
+  jackfruit: "https://images.unsplash.com/photo-1590004953392-5aba2e72269a?q=80&w=600",
+  groundnuts: "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?q=80&w=600",
+  vegetables: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=600",
+  local_products: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=600",
+};
 
 export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   users,
@@ -23,12 +35,15 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   onVerifyPayment,
   onUpdateDeliveryCharge,
   onUpdateGPayConfig,
-  deliveryCharges
+  deliveryCharges,
+  onAddProduct,
+  onEditProduct,
+  onDeleteProduct
 }) => {
   const { t, language, token } = useApp();
 
   // Mode tabs
-  const [adminTab, setAdminTab] = useState<"analytics" | "verifications" | "sellers" | "users" | "config" | "database">("analytics");
+  const [adminTab, setAdminTab] = useState<"analytics" | "verifications" | "sellers" | "users" | "config" | "database" | "produce">("analytics");
 
   // Local config states
   const [gpayId, setGpayId] = useState("tamilagro@okhdfcbank");
@@ -47,6 +62,102 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [dbFileTab, setDbFileTab] = useState<"users" | "products" | "orders">("users");
   const [dbError, setDbError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  // Admin Product Catalog Management states
+  const [editingProduceId, setEditingProduceId] = useState<string | null>(null);
+  const [prodFormOpen, setProdFormOpen] = useState(false);
+  const [nameEN, setNameEN] = useState("");
+  const [nameTA, setNameTA] = useState("");
+  const [descriptionEN, setDescriptionEN] = useState("");
+  const [descriptionTA, setDescriptionTA] = useState("");
+  const [category, setCategory] = useState("banana");
+  const [price, setPrice] = useState("");
+  const [availableStock, setAvailableStock] = useState("");
+  const [availableStockUnitEN, setAvailableStockUnitEN] = useState("kg(s)");
+  const [availableStockUnitTA, setAvailableStockUnitTA] = useState("கிலோ");
+  const [images, setImages] = useState<string[]>(["https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=600"]);
+  const [healthBenefitsEN, setHealthBenefitsEN] = useState("");
+  const [healthBenefitsTA, setHealthBenefitsTA] = useState("");
+  const [deliveryAvailability, setDeliveryAvailability] = useState(true);
+
+  useEffect(() => {
+    const isStandardPreset = images.length === 0 || images.some(img => Object.values(CATEGORY_IMAGES).includes(img));
+    if (isStandardPreset && CATEGORY_IMAGES[category]) {
+      setImages([CATEGORY_IMAGES[category]]);
+    }
+  }, [category]);
+
+  const resetProduceFormFields = () => {
+    setNameEN("");
+    setNameTA("");
+    setDescriptionEN("");
+    setDescriptionTA("");
+    setCategory("banana");
+    setPrice("");
+    setAvailableStock("");
+    setAvailableStockUnitEN("kg(s)");
+    setAvailableStockUnitTA("கிலோ");
+    setImages(["https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=600"]);
+    setHealthBenefitsEN("");
+    setHealthBenefitsTA("");
+    setDeliveryAvailability(true);
+    setEditingProduceId(null);
+    setProdFormOpen(false);
+  };
+
+  const handleAdminCreateProduce = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!nameEN || !nameTA || !price || !availableStock) {
+      alert("Required metadata missing.");
+      return;
+    }
+    if (!onAddProduct || !onEditProduct) return;
+
+    const payload = {
+      nameEN,
+      nameTA,
+      descriptionEN,
+      descriptionTA,
+      category,
+      price: Number(price),
+      availableStock: Number(availableStock),
+      availableStockUnitEN,
+      availableStockUnitTA,
+      images,
+      healthBenefitsEN,
+      healthBenefitsTA,
+      deliveryAvailability
+    };
+
+    let success = false;
+    if (editingProduceId) {
+      success = await onEditProduct(editingProduceId, payload);
+    } else {
+      success = await onAddProduct(payload);
+    }
+
+    if (success) {
+      resetProduceFormFields();
+    }
+  };
+
+  const startAdminEditProduce = (prod: any) => {
+    setEditingProduceId(prod.id);
+    setNameEN(prod.nameEN);
+    setNameTA(prod.nameTA);
+    setDescriptionEN(prod.descriptionEN);
+    setDescriptionTA(prod.descriptionTA);
+    setCategory(prod.category);
+    setPrice(String(prod.price));
+    setAvailableStock(String(prod.availableStock));
+    setAvailableStockUnitEN(prod.availableStockUnitEN);
+    setAvailableStockUnitTA(prod.availableStockUnitTA);
+    setImages(prod.images || ["https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=600"]);
+    setHealthBenefitsEN(prod.healthBenefitsEN || "");
+    setHealthBenefitsTA(prod.healthBenefitsTA || "");
+    setDeliveryAvailability(prod.deliveryAvailability !== false);
+    setProdFormOpen(true);
+  };
 
   // Helper trigger to load raw database files
   const fetchDbRaw = async () => {
@@ -201,6 +312,15 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             }`}
           >
             👥 Buyers
+          </button>
+
+          <button
+            onClick={() => setAdminTab("produce")}
+            className={`px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              adminTab === "produce" ? "bg-white dark:bg-zinc-900 text-emerald-800 dark:text-emerald-400 shadow-sm" : "text-zinc-500"
+            }`}
+          >
+            🌾 Produce Catalog
           </button>
 
           <button
@@ -713,6 +833,333 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
           </div>
 
+        </div>
+      )}
+
+      {adminTab === "produce" && (
+        <div className="space-y-6 animate-fade-in">
+          
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white dark:bg-zinc-900 border border-zinc-150/70 p-5 rounded-2xl gap-4">
+            <div>
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                🌾 Direct Marketplace Produce Catalog
+              </h3>
+              <p className="text-xs text-zinc-500 mt-1">
+                View, modify prices, or list new high-quality agricultural products on behalf of the cooperative.
+              </p>
+            </div>
+            
+            {!prodFormOpen && (
+              <button
+                onClick={() => {
+                  resetProduceFormFields();
+                  setProdFormOpen(true);
+                }}
+                className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-xs font-black shadow-sm cursor-pointer transition-all active:scale-95"
+              >
+                <Plus className="w-4 h-4" />
+                Add New Product / Add Coconut Oil
+              </button>
+            )}
+          </div>
+
+          {/* Form View / Table List View switch */}
+          {prodFormOpen ? (
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-150 rounded-2xl p-6 sm:p-8 space-y-6">
+              
+              <div className="flex items-center justify-between border-b pb-3.5 border-zinc-100 dark:border-zinc-800">
+                <h3 className="text-md font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-tight flex items-center gap-2">
+                  🌿 {editingProduceId ? "Modify Produce Specifications" : "Cultivate New Product Listing"}
+                </h3>
+                <button
+                  onClick={() => resetProduceFormFields()}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-500 hover:text-emerald-700 cursor-pointer"
+                >
+                  <ArrowLeft className="w-4 h-4" /> Cancel & Go Back
+                </button>
+              </div>
+
+              <form onSubmit={handleAdminCreateProduce} className="space-y-6 max-w-4xl text-xs font-sans">
+                
+                {/* Names row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Product Title (English) <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={nameEN}
+                      onChange={(e) => setNameEN(e.target.value)}
+                      placeholder="e.g. Pure Cold Pressed Coconut Oil"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-200 border px-4 py-3 rounded-xl text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Product Title (தமிழ் - Tamil) <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={nameTA}
+                      onChange={(e) => setNameTA(e.target.value)}
+                      placeholder="எ.கா. தூய செக்கு தேங்காய் எண்ணெய்"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-200 border px-4 py-3 rounded-xl text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Descriptions row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Description (English) <span className="text-red-500">*</span></label>
+                    <textarea
+                      required
+                      rows={3}
+                      value={descriptionEN}
+                      onChange={(e) => setDescriptionEN(e.target.value)}
+                      placeholder="Describe extraction method, sourcing and quality benefits"
+                      className="w-full bg-zinc-50 dark:bg-zinc-955 text-zinc-900 dark:text-zinc-200 border rounded-xl p-3 text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Description (தமிழ் - Tamil) <span className="text-red-500">*</span></label>
+                    <textarea
+                      required
+                      rows={3}
+                      value={descriptionTA}
+                      onChange={(e) => setDescriptionTA(e.target.value)}
+                      placeholder="தயாரிப்பு முறை, தரம் மற்றும் சுவை பற்றி சுருக்கமாக எழுதவும்"
+                      className="w-full bg-zinc-50 dark:bg-zinc-955 text-zinc-900 dark:text-zinc-200 border rounded-xl p-3 text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Price stock and Category splits */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                  
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Market Category <span className="text-red-500">*</span></label>
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="w-full bg-zinc-50 dark:bg-zinc-955 text-zinc-800 dark:text-zinc-250 border p-3 rounded-xl text-xs font-semibold outline-none"
+                    >
+                      <option value="banana">Banana Varieties 🍌</option>
+                      <option value="cashew">Cashew Nuts 🥜</option>
+                      <option value="jackfruit">Jackfruit 🍈</option>
+                      <option value="groundnuts">Groundnuts 🌰</option>
+                      <option value="vegetables">Fresh Vegetables 🥬</option>
+                      <option value="local_products">Local value-added / Oils / Traditional 🏺</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Cost per Unit (₹ INR) <span className="text-red-500">*</span></label>
+                    <input
+                      type="number"
+                      required
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                      placeholder="e.g. 240"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-200 border px-4 py-3 rounded-xl text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Available stock quantity <span className="text-red-500">*</span></label>
+                    <input
+                      type="number"
+                      required
+                      value={availableStock}
+                      onChange={(e) => setAvailableStock(e.target.value)}
+                      placeholder="e.g. 350"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-200 border px-4 py-3 rounded-xl text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Stock units rows */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Stock Unit (English) <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={availableStockUnitEN}
+                      onChange={(e) => setAvailableStockUnitEN(e.target.value)}
+                      placeholder="e.g. Litre(s) or kg(s) or bottle(s)"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-200 border px-4 py-3 rounded-xl text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Stock Unit (தமிழ்) <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={availableStockUnitTA}
+                      onChange={(e) => setAvailableStockUnitTA(e.target.value)}
+                      placeholder="எ.கா. லிட்டர் அல்லது கிலோ அல்லது பாட்டில்"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-200 border px-4 py-3 rounded-xl text-xs font-semibold outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Benefits specs rows */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Health Benefits (English)</label>
+                    <input
+                      type="text"
+                      value={healthBenefitsEN}
+                      onChange={(e) => setHealthBenefitsEN(e.target.value)}
+                      placeholder="e.g. Excellent for cooking and natural skin care."
+                      className="w-full bg-zinc-50 dark:bg-zinc-955 text-zinc-900 dark:text-zinc-200 border p-3 rounded-xl text-xs"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Health Benefits (தமிழ்)</label>
+                    <input
+                      type="text"
+                      value={healthBenefitsTA}
+                      onChange={(e) => setHealthBenefitsTA(e.target.value)}
+                      placeholder="எ.கா. சமையல் மற்றும் கூந்தல் ஆரோக்கியத்திற்கு மிகவும் சிறந்தது."
+                      className="w-full bg-zinc-50 dark:bg-zinc-955 text-zinc-900 dark:text-zinc-100 border p-3 rounded-xl text-xs"
+                    />
+                  </div>
+                </div>
+
+                {/* Additional parameters (Image, Delivery Availability) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-zinc-400 block">Product Cover Image URL (Or keep Unsplash placeholder)</label>
+                    <input
+                      type="text"
+                      value={images[0]}
+                      onChange={(e) => setImages([e.target.value])}
+                      placeholder="https://images.unsplash.com/..."
+                      className="w-full bg-zinc-50 dark:bg-zinc-955 text-zinc-900 dark:text-zinc-100 border p-3 rounded-xl text-[10px] font-mono"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-6">
+                    <input
+                      id="checkbox-adm-delivery"
+                      type="checkbox"
+                      checked={deliveryAvailability}
+                      onChange={(e) => setDeliveryAvailability(e.target.checked)}
+                      className="w-5 h-5 rounded border bg-zinc-50 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <label htmlFor="checkbox-adm-delivery" className="text-xs font-bold text-zinc-650 dark:text-zinc-350 select-none">
+                      Enable Direct cooperative district-wide logistics delivery
+                    </label>
+                  </div>
+                </div>
+
+                {/* Submission bar */}
+                <div className="pt-4 border-t flex justify-end gap-3.5">
+                  <button
+                    type="button"
+                    onClick={() => resetProduceFormFields()}
+                    className="px-5 py-2.5 bg-zinc-100 border hover:bg-zinc-200 rounded-xl text-xs font-bold transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-black shadow-sm transition cursor-pointer active:scale-95"
+                  >
+                    {editingProduceId ? "Save Modifications" : "List Crop in Catalog 🌾"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          ) : (
+            /* Table cargo view */
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-150/70 rounded-2xl p-5 space-y-4 overflow-hidden">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <h3 className="text-base font-bold text-zinc-850 dark:text-zinc-100 uppercase tracking-wider flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-emerald-600" />
+                  Direct Marketplace Inventories ({products.length} live products)
+                </h3>
+              </div>
+
+              {products.length === 0 ? (
+                <div className="text-center py-16 text-zinc-400 text-sm font-semibold">
+                  🌾 Catalog is completely blank. Click "Add New Product" to populate items!
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse text-sm">
+                    <thead>
+                      <tr className="border-b border-zinc-100 dark:border-zinc-800 text-zinc-400 text-xs font-bold uppercase tracking-wider font-sans">
+                        <th className="py-3 px-4">Produce Details</th>
+                        <th className="py-3 px-4">Category</th>
+                        <th className="py-3 px-4">Cost (₹)</th>
+                        <th className="py-3 px-4">Stock Avail.</th>
+                        <th className="py-3 px-4">Seller Account</th>
+                        <th className="py-3 px-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-50 dark:divide-zinc-850 font-sans font-medium text-xs">
+                      {products.map((p) => {
+                        const titleName = language === "en" ? p.nameEN : p.nameTA;
+                        const stockUnit = language === "en" ? p.availableStockUnitEN : p.availableStockUnitTA;
+
+                        return (
+                          <tr key={p.id} className="hover:bg-zinc-55/40 dark:hover:bg-zinc-850/20 transition-colors">
+                            <td className="py-4 px-4 flex items-center gap-3">
+                              <img src={p.images[0]} alt={p.nameEN} className="w-10 h-10 rounded-lg object-cover" />
+                              <div>
+                                <span className="font-bold text-zinc-900 dark:text-zinc-100 block">{titleName}</span>
+                                <span className="text-[10px] text-zinc-400 block font-mono">ID: {p.id}</span>
+                              </div>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-xs font-semibold capitalize text-zinc-650 dark:text-zinc-300">
+                                {p.category.replace("_", " ")}
+                              </span>
+                            </td>
+                            <td className="py-4 px-4 font-black text-emerald-800 dark:text-emerald-400 text-sm">₹{p.price}</td>
+                            <td className="py-4 px-4 text-zinc-650 dark:text-zinc-350">
+                              {p.availableStock} <span className="text-zinc-400 text-xs">{stockUnit}</span>
+                            </td>
+                            <td className="py-4 px-4 text-zinc-500 text-xs">
+                              <div className="font-semibold text-zinc-750 dark:text-zinc-200">{p.sellerName || "Cooperative Seller"}</div>
+                              <div className="text-[10px] text-zinc-400">District: {p.district}</div>
+                            </td>
+                            <td className="py-4 px-4 text-right space-x-1.5 whitespace-nowrap">
+                              <button
+                                onClick={() => startAdminEditProduce(p)}
+                                className="p-2 text-zinc-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-zinc-805 rounded-lg transition-colors cursor-pointer inline-block"
+                                title="Edit details & price"
+                              >
+                                <Edit className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  if (confirm(`Remove "${p.nameEN}" permanently from database?`)) {
+                                    if (onDeleteProduct) onDeleteProduct(p.id);
+                                  }
+                                }}
+                                className="p-2 text-zinc-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-zinc-805 rounded-lg transition-colors cursor-pointer inline-block"
+                                title="Delete product listing"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 

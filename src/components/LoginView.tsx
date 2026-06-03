@@ -195,8 +195,8 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    setEmail("admin@agro.com");
-                    setPassword("admin123");
+                    setEmail("yuvarajx026@gmail.com");
+                    setPassword("yuvaraj123");
                   }}
                   className="px-1.5 py-2 text-[10px] items-center justify-center font-bold rounded-lg bg-emerald-50/50 hover:bg-emerald-100 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-400 border border-[#D1E2C4]/30 hover:scale-102 transition cursor-pointer select-none"
                 >

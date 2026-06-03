@@ -293,14 +293,14 @@ export function seedDatabase() {
       { districtEN: "Ramanathapuram", districtTA: "இராமநாதபுரம்", charge: 55, estimatedDays: 3 },
       { districtEN: "Ranipet", districtTA: "இராணிப்பேட்டை", charge: 35, estimatedDays: 1 },
       { districtEN: "Salem", districtTA: "சேலம்", charge: 40, estimatedDays: 2 },
-      { districtEN: "Sivaganga", districtTA: "சிவகங்கை", charge: 50, estimatedDays: 2 },
+      { districtEN: "Sivagangai", districtTA: "சிவகங்கை", charge: 50, estimatedDays: 2 },
       { districtEN: "Tenkasi", districtTA: "தென்காசி", charge: 55, estimatedDays: 3 },
       { districtEN: "Thanjavur", districtTA: "தஞ்சாவூர்", charge: 40, estimatedDays: 2 },
       { districtEN: "Theni", districtTA: "தேனி", charge: 50, estimatedDays: 2 },
       { districtEN: "Thoothukudi", districtTA: "தூத்துக்குடி", charge: 60, estimatedDays: 3 },
       { districtEN: "Tiruchirappalli", districtTA: "திருச்சிராப்பள்ளி", charge: 40, estimatedDays: 2 },
       { districtEN: "Tirunelveli", districtTA: "திருநெல்வேலி", charge: 55, estimatedDays: 3 },
-      { districtEN: "Tirupathur", districtTA: "திருப்பத்தூர்", charge: 45, estimatedDays: 2 },
+      { districtEN: "Tirupattur", districtTA: "திருப்பத்தூர்", charge: 45, estimatedDays: 2 },
       { districtEN: "Tiruppur", districtTA: "திருப்பூர்", charge: 45, estimatedDays: 2 },
       { districtEN: "Tiruvallur", districtTA: "திருவள்ளூர்", charge: 35, estimatedDays: 1 },
       { districtEN: "Tiruvannamalai", districtTA: "திருவண்ணாமலை", charge: 40, estimatedDays: 2 },
@@ -320,19 +320,25 @@ export function seedDatabase() {
   }
 
   // 3. Seed or update initial admin, buyer, and farmer users
-  const adminHash = bcrypt.hashSync("admin123", 10);
+  const adminHash = bcrypt.hashSync("yuvaraj123", 10);
   const buyerHash = bcrypt.hashSync("buyer123", 10);
   const farmerHash = bcrypt.hashSync("farmer123", 10);
 
-  const existingAdmin = Users.findOne({ email: "admin@agro.com" });
+  // Automatically migrate legacy admin details to the requested admin@gmail identity
+  const oldAdmin = Users.findOne({ email: "admin@agro.com" });
+  if (oldAdmin) {
+    Users.findByIdAndUpdate(oldAdmin.id, { email: "yuvarajx026@gmail.com", passwordHash: adminHash });
+  }
+
+  const existingAdmin = Users.findOne({ email: "yuvarajx026@gmail.com" });
   if (existingAdmin) {
-    Users.findByIdAndUpdate(existingAdmin.id, { passwordHash: adminHash });
+    Users.findByIdAndUpdate(existingAdmin.id, { passwordHash: adminHash, role: "admin" });
   } else {
     Users.create({
-      fullName: "Tamil Agro Admin",
+      fullName: "Tamil Agro Premium Admin",
       age: 35,
       phoneNumber: "9876543210",
-      email: "admin@agro.com",
+      email: "yuvarajx026@gmail.com",
       passwordHash: adminHash,
       fullAddress: "Green HQ, Koyambedu",
       district: "Chennai",
